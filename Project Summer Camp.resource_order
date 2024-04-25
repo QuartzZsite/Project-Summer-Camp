@@ -19,11 +19,13 @@
   "ResourceOrderSettings":[
     {"name":"oCamera","order":2,"path":"objects/oCamera/oCamera.yy",},
     {"name":"oEnemy","order":3,"path":"objects/oEnemy/oEnemy.yy",},
+    {"name":"oTest","order":4,"path":"objects/oTest/oTest.yy",},
     {"name":"oTrail","order":1,"path":"objects/oTrail/oTrail.yy",},
     {"name":"sCamera","order":1,"path":"sprites/sCamera/sCamera.yy",},
     {"name":"sCollisionMask","order":3,"path":"sprites/sCollisionMask/sCollisionMask.yy",},
     {"name":"sEnemyTemporary","order":2,"path":"sprites/sEnemyTemporary/sEnemyTemporary.yy",},
     {"name":"sGrassTileSet","order":1,"path":"sprites/sGrassTileSet/sGrassTileSet.yy",},
+    {"name":"sTest","order":3,"path":"sprites/sTest/sTest.yy",},
     {"name":"sSusieAttackTemporary","order":4,"path":"sprites/sSusieAttackTemporary/sSusieAttackTemporary.yy",},
     {"name":"sSusieAttackTemporaryHB","order":5,"path":"sprites/sSusieAttackTemporaryHB/sSusieAttackTemporaryHB.yy",},
     {"name":"sSusieIdle","order":1,"path":"sprites/sSusieIdle/sSusieIdle.yy",},
