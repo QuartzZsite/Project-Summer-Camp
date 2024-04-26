@@ -122,7 +122,8 @@ StateFree = function()
 	
 	if (place_meeting(x, y, oEnemy))
 	{
-		state = StateKnockback;
+		player_health -=50;
+		state = StateGettingDamaged;
 	}
 
 	//move player
@@ -175,7 +176,6 @@ StateFree = function()
 	#endregion
 	
 }
-
 
 StateDash = function()
 {
@@ -311,7 +311,6 @@ StateAttack = function()
 
 StateKnockback = function()
 {
-	
 	yspd += grav;
 	//x collision
 	if (place_meeting(x + xspd, y, my_tilemap))
@@ -339,21 +338,6 @@ StateKnockback = function()
 		yspd = 0;
 	}
 	
-	if (place_meeting(x, y, oEnemy))
-	{
-		if(instance_nearest(x, y, oEnemy).x > oPlayer.x)
-		{
-			xspd = -5;
-			yspd = -2;
-		}
-		else
-		{
-			xspd = 5;
-			yspd = -2;
-		}
-	
-	}
-
 	xspd = lerp(xspd, 0, 0.05);
 	
 	x += xspd;
@@ -363,6 +347,65 @@ StateKnockback = function()
 	{
 		state = StateFree;
 	}
+}
+
+StateGettingDamaged = function()
+{
+	if (player_health > 0)
+	{
+		yspd += grav;
+		//x collision
+		if (place_meeting(x + xspd, y, my_tilemap))
+		{
+			//move player closer to wall
+			var _pixel_check = sign(xspd);
+			while !place_meeting(x + _pixel_check, y, my_tilemap)
+			{
+				x += _pixel_check;
+			}
+		
+			//set speed to 0
+			xspd = 0;
+		}
+		
+		//y collision
+		if place_meeting(x + xspd, y + yspd, my_tilemap)
+		{
+			var _pixel_check = sign(yspd);
+			while !place_meeting(x + xspd, y + _pixel_check, my_tilemap)
+			{
+				y += _pixel_check;
+			}
+		
+			yspd = 0;
+		}
+		
+		if (place_meeting(x, y, oEnemy))
+		{
+			if(instance_nearest(x, y, oEnemy).x > oPlayer.x)
+			{
+				xspd = -5;
+				yspd = -2;
+			}
+			else
+			{
+				xspd = 5;
+				yspd = -2;
+			}
+		
+		}
+		
+		state = StateKnockback;
+	}
+	else
+	{
+		state = StateDead;
+	}
+}
+
+StateDead = function()
+{
+	room_restart();
 }
 
 state = StateFree;
