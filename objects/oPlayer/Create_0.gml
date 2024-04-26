@@ -89,8 +89,7 @@ StateFree = function()
 		state = StateDash;
 	}
 
-	//Collisions
-	#region
+	#region Collisions
 	
 		//x collision
 		if (place_meeting(x + xspd, y, my_tilemap))
@@ -119,6 +118,12 @@ StateFree = function()
 		}
 	
 	#endregion
+	
+	
+	if (place_meeting(x, y, oEnemy))
+	{
+		state = StateKnockback;
+	}
 
 	//move player
 	#region
@@ -127,8 +132,9 @@ StateFree = function()
 		y += yspd;
 	
 	#endregion
-
-	//Animation Stuff
+	
+	#region Animation Stuff
+	
 	//invert sprite
 	if (xspd != 0)
 	{
@@ -165,6 +171,8 @@ StateFree = function()
 	{
 		state = StateAttack;
 	}
+	
+	#endregion
 	
 }
 
@@ -262,15 +270,15 @@ StateAttack = function()
 	yspd = 0;
 	
 	//Start of the attack
-	if (sprite_index != sSusieAttackTemporary)
+	if (sprite_index != sSusieAttack)
 	{
-		sprite_index = sSusieAttackTemporary;
+		sprite_index = sSusieAttack;
 		image_index = 0;
 		ds_list_clear(hitByAttack);
 	}
 	
 	//Use hitbox and check for hits
-	mask_index = sSusieAttackTemporaryHB
+	mask_index = sSusieAttackHB
 	var hitByAttackNow = ds_list_create();
 	var hits = instance_place_list(x, y, oEnemy, hitByAttackNow, false);
 	if (hits > 0)
@@ -299,6 +307,62 @@ StateAttack = function()
 			state = StateFree;
         }
 	
+}
+
+StateKnockback = function()
+{
+	
+	yspd += grav;
+	//x collision
+	if (place_meeting(x + xspd, y, my_tilemap))
+	{
+		//move player closer to wall
+		var _pixel_check = sign(xspd);
+		while !place_meeting(x + _pixel_check, y, my_tilemap)
+		{
+			x += _pixel_check;
+		}
+	
+		//set speed to 0
+		xspd = 0;
+	}
+	
+	//y collision
+	if place_meeting(x + xspd, y + yspd, my_tilemap)
+	{
+		var _pixel_check = sign(yspd);
+		while !place_meeting(x + xspd, y + _pixel_check, my_tilemap)
+		{
+			y += _pixel_check;
+		}
+	
+		yspd = 0;
+	}
+	
+	if (place_meeting(x, y, oEnemy))
+	{
+		if(instance_nearest(x, y, oEnemy).x > oPlayer.x)
+		{
+			xspd = -5;
+			yspd = -2;
+		}
+		else
+		{
+			xspd = 5;
+			yspd = -2;
+		}
+	
+	}
+
+	xspd = lerp(xspd, 0, 0.05);
+	
+	x += xspd;
+	y += yspd;
+	
+	if (xspd <= 0.2)
+	{
+		state = StateFree;
+	}
 }
 
 state = StateFree;
