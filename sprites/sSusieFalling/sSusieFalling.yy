@@ -23,7 +23,7 @@
   ],
   "name":"sSusieFalling",
   "nineSlice":null,
-  "origin":4,
+  "origin":9,
   "parent":{
     "name":"PlayerSprites",
     "path":"folders/Sprites/PlayerSprites.yy",
@@ -75,7 +75,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":48,
+    "xorigin":49,
     "yorigin":48,
   },
   "swatchColours":null,

@@ -1,11 +1,12 @@
 enemy_health = 50;
-dir = 1;
+dir = -1;
 move_spd = 1;
 fear_of_heights = 1;
 xspd = 0;
 yspd = 0;
 grav = 0.2;
 fall_height = 8;
+change_sprite_direction = 1; // cuz of image x scale
 
 my_tilemap = layer_tilemap_get_id("Ground")
 
@@ -38,14 +39,20 @@ StateFree = function()
 		}
 	
 		yspd = 0;
-		if (fear_of_heights && !position_meeting(x + (sprite_width / 2) * dir, y + (sprite_height / 2) + fall_height, my_tilemap))
+		if (fear_of_heights && !position_meeting(x + (change_sprite_direction * sprite_width / 2) * dir, y + (sprite_height / 2) + fall_height, my_tilemap))
 		{
 			dir *= -1
+			image_xscale *= -1;
+			change_sprite_direction *= -1;
+			
 		}
 		
-		if (position_meeting(x + (sprite_width / 2) * dir - (sign(xspd) * 20), y, my_tilemap))
+		if (position_meeting(x + (change_sprite_direction * sprite_width / 2) * dir - (sign(xspd) * 40), y, my_tilemap))
 		{
 			dir *= -1
+			image_xscale *= -1;
+			change_sprite_direction *= -1;
+			
 		}
 	}
 	
@@ -56,14 +63,21 @@ StateFree = function()
 	{
 		state = StateDead;
 	}
+	
+
 }
 
 StateDead = function()
 {
 	xspd = 0;
 	yspd = 0;
+	
+	sprite_index = sEnemyGhostDead;
+	
+	if(image_index > image_number -1)
+    {
+		instance_destroy();
+    }
 }
 
 state = StateFree;
-
-//ADD KNOCKBACK ON HIT BASED ON PLAYER'S SPRITE DIRECTION (SIGN)

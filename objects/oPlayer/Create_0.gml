@@ -72,7 +72,6 @@ StateFree = function()
 	}
 	
 	//Dash Input
-	//TODO : FIX RIGHT DIRECTION DASH
 	if (can_dash && dash_key)
 	{
 		can_dash = false;
@@ -122,7 +121,7 @@ StateFree = function()
 	
 	if (place_meeting(x, y, oEnemy))
 	{
-		player_health -=50;
+		player_health -=25;
 		state = StateGettingDamaged;
 	}
 
@@ -292,7 +291,7 @@ StateAttack = function()
 				ds_list_add(hitByAttack, hitID);
 				with (hitID)
 				{
-					//TODO
+					
 					//ENEMY HIT AND STUFF
 					hitByAttackNow[| i].state = StateDead;
 				}
@@ -302,10 +301,10 @@ StateAttack = function()
 	ds_list_destroy(hitByAttackNow);
 
 	if(image_index > image_number -1)
-        {
+    {
             mask_index = sSusieIdle
 			state = StateFree;
-        }
+    }
 	
 }
 
@@ -343,9 +342,16 @@ StateKnockback = function()
 	x += xspd;
 	y += yspd;
 	
-	if (xspd <= 0.2)
+	if (sprite_index != sSusieDamage)
 	{
-		state = StateFree;
+		sprite_index = sSusieDamage;
+		image_index = 0;
+	}
+	
+	if(image_index > image_number -1)
+    {
+            mask_index = sSusieIdle
+			state = StateFree;
 	}
 }
 

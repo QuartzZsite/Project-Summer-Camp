@@ -31,9 +31,12 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sEnemyTemporary",
-    "path":"sprites/sEnemyTemporary/sEnemyTemporary.yy",
+    "name":"sEnemyGhost",
+    "path":"sprites/sEnemyGhost/sEnemyGhost.yy",
   },
-  "spriteMaskId":null,
+  "spriteMaskId":{
+    "name":"sEnemyGhost",
+    "path":"sprites/sEnemyGhost/sEnemyGhost.yy",
+  },
   "visible":true,
 }
