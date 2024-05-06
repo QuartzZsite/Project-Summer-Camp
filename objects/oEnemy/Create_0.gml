@@ -39,7 +39,7 @@ StateFree = function()
 		}
 	
 		yspd = 0;
-		if (fear_of_heights && !position_meeting(x + (change_sprite_direction * sprite_width / 2) * dir, y + (sprite_height / 2) + fall_height, my_tilemap))
+		if (fear_of_heights && !position_meeting(x + (change_sprite_direction * sprite_width / 2) * dir - (sign(xspd) * 30), y + (sprite_height / 2) + fall_height, my_tilemap))
 		{
 			dir *= -1
 			image_xscale *= -1;
@@ -56,8 +56,8 @@ StateFree = function()
 		}
 	}
 	
-	x += xspd;
-	y += yspd;
+	x += floor(xspd);
+	y += floor(yspd);
 	
 	if (enemy_health <= 0)
 	{

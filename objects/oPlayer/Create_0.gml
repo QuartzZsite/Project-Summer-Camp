@@ -128,8 +128,8 @@ StateFree = function()
 	//move player
 	#region
 	
-		x += xspd;
-		y += yspd;
+		x += floor(xspd);
+		y += (yspd);
 	
 	#endregion
 	

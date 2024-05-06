@@ -8,5 +8,8 @@ jump_key_hold = keyboard_check(vk_space);
 dash_key = keyboard_check_pressed(vk_shift);
 attack_key = keyboard_check(ord("F")) || mouse_check_button(mb_left);
 
-
+if (oPlayer.y >= room_height + 70)
+{
+	room_restart();
+}
 state();
